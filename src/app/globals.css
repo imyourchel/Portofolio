@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (driven by next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Design tokens — edit these to re-theme the whole site
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #faf7f2;          /* ivory */
+  --surface: #ffffff;
+  --surface-2: #f4efe7;
+  --line: #ece6dc;
+  --ink: #1f1d2b;         /* deep ink */
+  --muted: #6b6878;
+  --sage: #b8c9b4;
+  --rose: #e8c4c4;
+  --lavender: #cfc6e6;
+  --powder: #c5d7e8;
+  --gold: #b8955a;        /* decorative only */
+  --gold-ink: #86672f;    /* gold that passes AA as text */
+  --shadow: 0 1px 2px rgb(31 29 43 / 0.04), 0 12px 32px -12px rgb(31 29 43 / 0.12);
+  --shadow-lg: 0 2px 4px rgb(31 29 43 / 0.04), 0 30px 60px -20px rgb(31 29 43 / 0.22);
+  --grain-opacity: 0.05;
+}
+
+.dark {
+  --bg: #17151f;          /* deep plum-charcoal */
+  --surface: #211e2b;
+  --surface-2: #1c1a25;
+  --line: #2f2b3b;
+  --ink: #ede9f2;
+  --muted: #a8a3b5;
+  --sage: #8fa38b;
+  --rose: #c29c9f;
+  --lavender: #a79dc4;
+  --powder: #9ab0c4;
+  --gold: #c9a86e;
+  --gold-ink: #d4b47a;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -12px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 30px 60px -20px rgb(0 0 0 / 0.65);
+  --grain-opacity: 0.07;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-sage: var(--sage);
+  --color-rose: var(--rose);
+  --color-lavender: var(--lavender);
+  --color-powder: var(--powder);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --shadow-soft: var(--shadow);
+  --shadow-lifted: var(--shadow-lg);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Subtle film grain over the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+::selection {
+  background: var(--lavender);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.font-display {
+  font-optical-sizing: auto;
+}
+
+/* Hairline divider with a gold dot, used between sections */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
